@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    
+    var List;
+
+    function retrive() {
+      List = JSON.parse(localStorage.getItem('listOfTodos'));
+      for (var i = List.length - 1; i >= 0; i--) {
+          document.getElementById('todoLists').innerHTML+="<tr><td>" + List[i] + "<span  class=\"glyphicon glyphicon-remove pull-right\" onClick=\"removeItem(this)\"></span></td></tr>";
+        }
+    }
+
+    function myAlert() {
+      var itemToAdd = document.getElementById('todoItem').value;
+      
+      document.getElementById("todoLists").innerHTML+="<tr><td>" + itemToAdd + "<span  class=\"glyphicon glyphicon-remove pull-right\" onClick=\"removeItem(this)\"></span></td></tr>";
+      List.push(itemToAdd);
+
+      localStorage.setItem('listOfTodos', JSON.stringify(List));
+      
+      document.getElementById('todoItem').value="";
+    }
+
+    function removeItem(o) {
+     var p=o.parentNode.parentNode;
+     var itemValue = o.parentNode.textContent;
+     // console.log(itemValue);
+     var index = List.indexOf(itemValue);
+     if (index !== -1) 
+        List.splice(index, 1);
+     p.parentNode.removeChild(p);
+     localStorage.setItem('listOfTodos', JSON.stringify(List));
+    }
+
+    function fadeLess(x) {
+       x.style.opacity = 1;
+    }
+
+    function fadeMore(x) {
+       x.style.opacity = 0.81;
+    }
+    
+  </script>
+  
+  <style type="text/css">
+    
+    .panel-body {
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-bottom: 10px;
+      padding-top: 10px;
+    }
+    
+    body {
+      background-image: url("todoImage.png");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center; 
+      background-size:cover;
+    }
+
+    .panel-group {
+      opacity: 0.81;
+    }
+
+  </style>
+
+</head>
+
+<body onload="retrive()">
+<div style="height:200px;"></div>
+
+<div class="container" >
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <div class="panel-group" onmouseover="fadeLess(this)" onmouseout="fadeMore(this)">
+        <div class="panel panel-primary">
+            <div class="panel-heading">My Todo List</div>
+            <div class="panel-body">
+              <table class="table table-striped" >
+                <thead>
+                  <tr>
+                    <div class="input-group">
+                      <input id="todoItem" type="text" class="form-control" placeholder="Todo" name="todo">
+                      <div class="input-group-btn">
+                        <button class="btn btn-success" type="submit" onClick="myAlert()">Add</button>
+                      </div>
+                     </div>
+                  </tr>
+                </thead>
+                <tbody id="todoLists">
+                  <!-- <tr>
+                    <td>John<span  class="glyphicon glyphicon-remove pull-right" onClick="removeItem(this)"></span></td>
+                  </tr>
+                  <tr>
+                    <td>Mary<span  class="glyphicon glyphicon-remove pull-right" onClick="removeItem(this)"></span></td>
+                  </tr> -->
+                </tbody>
+              </table>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+</div>
+
+</body>
+</html>
