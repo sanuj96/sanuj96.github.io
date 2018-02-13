@@ -22,6 +22,11 @@
       var itemToAdd = document.getElementById('todoItem').value;
       
       document.getElementById("todoLists").innerHTML+="<tr><td>" + itemToAdd + "<span  class=\"glyphicon glyphicon-remove pull-right\" onClick=\"removeItem(this)\"></span></td></tr>";
+      
+      if(List == null) {
+      	List = [];
+      }
+
       List.push(itemToAdd);
 
       localStorage.setItem('listOfTodos', JSON.stringify(List));
@@ -32,7 +37,7 @@
     function removeItem(o) {
      var p=o.parentNode.parentNode;
      var itemValue = o.parentNode.textContent;
-     // console.log(itemValue);
+     
      var index = List.indexOf(itemValue);
      if (index !== -1) 
         List.splice(index, 1);
